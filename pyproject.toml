@@ -1,0 +1,40 @@
+[project]
+name = "xbps"
+description = "utilities and tools for working with xbps"
+authors = [
+  { name = "classabbyamp", email = "void@placeviolette.net" }
+]
+dynamic = ["version"]
+readme = "README.md"
+license = "BSD-2-Clause"
+license-files = ["LICENSE"]
+keywords = ["linux", "xbps"]
+classifiers = [
+  "Development Status :: 2 - Pre-Alpha",
+  "Intended Audience :: Developers",
+  "Intended Audience :: System Administrators",
+  "Operating System :: POSIX :: Linux",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Topic :: System :: Archiving :: Packaging",
+  "Topic :: System :: Software Distribution",
+]
+
+requires-python = ">=3.13"
+dependencies = [
+  "pyzstd>=0.18.0 ; python_full_version < '3.14'",
+]
+
+[project.urls]
+Repository = "https://github.com/classabbyamp/xbps.py"
+
+[project.scripts]
+xstage = "xbps.scripts.xstage:main"
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.dynamic]
+version = {attr = "xbps.__version__"}
