@@ -1,7 +1,6 @@
 import sys
-from pathlib import Path
 
-from xbps.util import StageDiff, get_remote_repo, read_repodata, compute_stage
+from xbps.util.repodata import StageDiff, Repodata
 
 
 BOLD = "\033[0;1m"
@@ -40,17 +39,11 @@ def main() -> None:
     for arg in args:
         print(f"{BOLD}=> Checking repodata at {arg}... ", end="")
 
-        if arg.startswith(("http://", "https://")):
-            repodata = get_remote_repo(arg)
-        else:
-            repodata = Path(arg)
-            if not repodata.is_file():
-                print(f"{RED}ERROR: {repodata} is not a file{RESET}", file=sys.stderr)
-                exit(1)
+        repodata = Repodata.from_repodata(arg)
+                # print(f"{RED}ERROR: {repodata} is not a file{RESET}", file=sys.stderr)
+                # exit(1)
 
-        index, stage = read_repodata(repodata)
-
-        diffs = compute_stage(index, stage)
+        diffs = repodata.compute_stage()
         if diffs:
             print(f"{RED}STAGED!{RESET}")
             for diff in diffs:
